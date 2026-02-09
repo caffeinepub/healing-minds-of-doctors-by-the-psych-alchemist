@@ -1,0 +1,24 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-09T18:08:42.852Z",
+  "summary": "Guided Meditation ambient sound selection and playback were updated to use the option’s value as a direct audio source (supporting both local asset paths and full https:// URLs), with error handling via English toast messages and playback switching when the selection changes. Two additional non-product files were also updated with broader, unrelated project summaries.",
+  "missing_requirements": [],
+  "hallucinated_features": [
+    {
+      "description": "Updated broad app-level feature summaries unrelated to guided-meditation internet audio streaming (e.g., authentication, dashboard redesign, many pages/components).",
+      "reason": "BuildRequest only asked for REQ-41/REQ-42 changes to Guided Meditation ambient sound streaming logic; these summary/documentation updates are not requested deliverables.",
+      "evidence": [
+        "frontend-file-summaries.txt",
+        "project_state.json"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/content/guidedMeditation.ts",
+    "frontend/src/pages/GuidedMeditationPage.tsx",
+    "project_state.json"
+  ]
+}

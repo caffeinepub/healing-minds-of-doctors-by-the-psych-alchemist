@@ -1,0 +1,69 @@
+{
+  "kind": "build_request",
+  "title": "Enable guided meditation ambient sounds to stream from internet URLs",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-41",
+      "text": "Update the Guided Meditation ambient sound selector to support streaming audio from full internet URLs (in addition to existing bundled local assets), so selecting a sound plays that URL directly.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "MAKE FINAL YOU CAN ADDD SOME AUDIO FROM THE INTERNET",
+          "APPLY IT",
+          "BUILD"
+        ]
+      },
+      "acceptanceCriteria": [
+        "In Guided Meditation, ambient sound options can include full https:// URLs and are played successfully when selected.",
+        "Existing local ambient sound options (e.g., /assets/guided-meditation/*.mp3) continue to work without changes.",
+        "If a selected remote audio URL fails to load or play, the page shows a clear English error message and does not crash or get stuck in a playing state."
+      ]
+    },
+    {
+      "id": "REQ-42",
+      "text": "Implement the Guided Meditation audio loading logic so it uses the selected option value as the audio source directly (rather than assuming a local asset base path), while keeping the rest of the Guided Meditation experience unchanged (timer, breathing visual, script, and navigation).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "You want the final version of your page with audio loaded directly from the internet.",
+          "audio.src = document.getElementById('sound').value;"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Changing the selected ambient sound while audio is playing switches playback to the newly selected source (local or remote) without requiring a page refresh.",
+        "Starting/pausing/resetting the session continues to work as before and correctly controls the audio element.",
+        "No changes are made to the Enhanced Breathing page background audio behavior (it must still load from \"/assets/breathing/ambient.mp3\")."
+      ]
+    }
+  ],
+  "constraints": [
+    "Frontend immutable paths must not be edited (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, and frontend/src/components/ui/*).",
+    "Do not change the Enhanced Breathing background audio path \"/assets/breathing/ambient.mp3\"."
+  ],
+  "nonGoals": [
+    "Adding third-party audio hosting integrations, authentication, or API keys.",
+    "Implementing text-to-speech or a generated voiceover for the meditation script.",
+    "Changing backend canister APIs or data models for audio playback."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

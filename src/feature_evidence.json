@@ -1,0 +1,44 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-update-the-guided-meditation-ambient-sound-selector-to-support-streaming-audio-from-full-internet-urls-in-addition-to-existing-bundled-local-assets-so-selecting-a-sound-plays-that-url-directly",
+      "featureTitle": "Update the Guided Meditation ambient sound selector to support streaming audio from full internet URLs (in addition to existing bundled local assets), so selecting a sound plays that URL directly.",
+      "files": [
+        "frontend/src/content/guidedMeditation.ts",
+        "frontend/src/pages/GuidedMeditationPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-41"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-guided-meditation-audio-loading-logic-so-it-uses-the-selected-option-value-as-the-audio-source-directly-rather-than-assuming-a-local-asset-base-path-while-keeping-the-rest-of-the-guided-meditation-experience-unchanged-timer-breathing-visual-script-and-navigation",
+      "featureTitle": "Implement the Guided Meditation audio loading logic so it uses the selected option value as the audio source directly (rather than assuming a local asset base path), while keeping the rest of the Guided Meditation experience unchanged (timer, breathing visual, script, and navigation).",
+      "files": [
+        "frontend/src/pages/GuidedMeditationPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-42"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

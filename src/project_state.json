@@ -1,0 +1,444 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 21,
+  "summary": "Shift toward a production-ready Android app build based on the provided “MASTER BUILD DOCUMENT” for Healing Minds of Doctors (BY THE PSYCH-ALCHEMIST), including anonymous access option + mandatory soft medical verification, a card-based dashboard, real-time support audio modules, Vent Room with reactions-only + moderation, anonymous Mentor matching/chat, crisis support with direct dial, and a paywall using Google Play Billing (₹199/mo, 30-day trial).",
+  "architectural_notes": [
+    "Tech stack: Expo/React Native frontend (Expo Router) + FastAPI backend + MongoDB.",
+    "Auth: Google OAuth with medical-only access; verification via medical license number (doctors) or college name + student ID (students).",
+    "AI feature: backend uses an LLM key for AI-powered CBT thought reframing.",
+    "Offline-first support is required.",
+    "Payment integration is on hold; launch planned as Free Beta before Razorpay integration.",
+    "UI direction: classy, minimalist, dark elegant design system centralized in frontend/constants/Colors.ts; apply consistently across all screens.",
+    "Meditation/breathing feature will use a specific provided background audio track from the user; integrate this asset into the app’s background audio playback controls.",
+    "Proposed alternate stack in blueprint: Android-first build using Flutter/Kotlin frontend with Firebase/AWS backend to support real-time messaging, moderation APIs, encryption, and subscriptions via Google Play Billing.",
+    "Access model update: allow 'Continue anonymously' option, but still require completion of medical verification before unlocking dashboard/features.",
+    "Privacy architecture emphasis: anonymous front-end IDs; encrypted backend; no real name/institution/license displayed publicly; identity reveal optional only inside mentor chat."
+  ],
+  "known_issues": [
+    "P0: UI is inconsistent due to incomplete redesign; remaining screens/components still use old/floral styles and must be updated to the new dark elegant design system.",
+    "P0: Onboarding/login flow appears blocked after entering name (does not proceed past the name input step)."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-implement-a-cohesive-app-wide-classy-minimalist-dark-elegant-visual-theme-and-apply-it-consistently-across-all-pages-and-shared-components-colors-typography-spacing-cards-inputs-buttons-navigation-ensuring-any-older-competing-styles-are-removed-or-no-longer-used",
+      "title": "Implement a cohesive, app-wide “classy, minimalist, dark elegant” visual theme and apply it consistently across all pages and shared components (colors, typography, spacing, cards, inputs, buttons, navigation), ensuring any older/competing styles are removed or no longer used.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-authentication-using-internet-identity-and-create-an-onboarding-gate-that-allows-access-only-after-successful-sign-in-and-completion-of-a-medical-verification-form",
+      "title": "Add authentication using Internet Identity and create an onboarding gate that allows access only after successful sign-in and completion of a medical verification form.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verification-capture-and-persistence-for-two-user-types-1-doctor-verification-via-medical-license-number-2-student-verification-via-college-name-college-id-store-verification-status-and-details-per-user-and-enforce-gating-based-on-verification-status",
+      "title": "Implement verification capture and persistence for two user types: (1) Doctor verification via Medical License Number, (2) Student verification via College Name + College ID; store verification status and details per user and enforce gating based on verification status.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-quick-mood-tracker-that-supports-emoji-based-mood-selection-plus-a-weekly-burnout-scale-persist-entries-per-user-and-display-recent-history",
+      "title": "Build a quick mood tracker that supports emoji-based mood selection plus a weekly burnout scale; persist entries per user and display recent history.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-cbt-thought-diary-with-guided-prompts-and-an-optional-ai-powered-reframe-field-persist-entries-per-user-and-allow-viewing-past-entries",
+      "title": "Implement a CBT thought diary with guided prompts and an optional “AI-powered” reframe field; persist entries per user and allow viewing past entries.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-breathing-mindfulness-section-that-includes-a-a-5-minute-guided-exercise-option-and-b-a-dedicated-enhanced-breathing-page-with-a-3-minute-timer-a-guided-meditation-script-and-background-audio-playback-controls",
+      "title": "Create a breathing/mindfulness section that includes (a) a 5-minute guided exercise option and (b) a dedicated enhanced breathing page with a 3-minute timer, a guided meditation script, and background audio playback controls.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-anonymous-community-features-1-an-anonymous-peer-forum-where-users-can-create-and-browse-posts-and-2-a-separate-vent-room-for-instant-anonymous-vent-submissions-and-a-feed-history-view",
+      "title": "Implement anonymous community features: (1) an anonymous peer forum where users can create and browse posts, and (2) a separate “Vent Room” for instant anonymous vent submissions and a feed/history view.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-progress-dashboard-with-charts-summarizing-mood-burnout-trends-over-time-and-basic-engagement-stats-e-g-entries-count-per-week",
+      "title": "Add a progress dashboard with charts summarizing mood/burnout trends over time and basic engagement stats (e.g., entries count per week).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-crisis-resources-page-that-prominently-lists-suicide-helpline-information-and-an-immediate-safety-notice-ensure-it-is-reachable-within-one-tap-from-key-areas-e-g-tools-tab-navigation",
+      "title": "Add a crisis resources page that prominently lists suicide helpline information and an immediate safety notice; ensure it is reachable within one tap from key areas (e.g., Tools tab / navigation).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-relaxation-content-browsing-a-quotes-section-plus-short-articles-tips-quotes-should-be-fetched-from-the-backend-and-displayed-in-an-elegant-readable-format",
+      "title": "Add relaxation content browsing: a quotes section plus short articles/tips; quotes should be fetched from the backend and displayed in an elegant, readable format.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-daily-self-care-reminders-as-in-app-reminders-that-the-user-can-configure-time-frequency-and-that-display-inside-the-app-persist-reminder-settings-per-user",
+      "title": "Implement daily self-care reminders as in-app reminders that the user can configure (time, frequency) and that display inside the app; persist reminder settings per user.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-export-my-data-to-generate-a-pdf-containing-the-user-s-mood-entries-burnout-scores-and-cbt-diary-entries-for-a-selected-date-range-and-allow-downloading-it-from-the-browser",
+      "title": "Add “Export my data” to generate a PDF containing the user’s mood entries, burnout scores, and CBT diary entries for a selected date range and allow downloading it from the browser.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-privacy-policy-screen-accessible-from-the-app-e-g-footer-settings-and-ensure-it-contains-clear-sections-describing-data-collected-storage-and-anonymous-posting-behavior",
+      "title": "Add a Privacy Policy screen accessible from the app (e.g., footer/settings) and ensure it contains clear sections describing data collected, storage, and anonymous posting behavior.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-login-onboarding-entry-experience-loginpage-verificationpage-to-feel-like-a-premium-meditative-product-using-the-uploaded-ui-references-as-inspiration-bold-calming-headline-spacious-layout-soft-gradients-elegant-cards-and-strong-visual-hierarchy-while-preserving-existing-internet-identity-login-and-verification-flow-behavior",
+      "title": "Redesign the login/onboarding entry experience (LoginPage + VerificationPage) to feel like a premium, meditative product using the uploaded UI references as inspiration (bold calming headline, spacious layout, soft gradients, elegant cards, and strong visual hierarchy) while preserving existing Internet Identity login and verification flow behavior.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-main-in-app-navigation-and-layout-applayout-header-sidebar-mobile-menu-to-a-more-refined-calming-modern-navigation-experience-inspired-by-the-uploaded-references-clean-top-bar-polished-active-states-softer-surfaces-consistent-iconography-without-changing-existing-routes-pages-or-breaking-responsiveness",
+      "title": "Upgrade the main in-app navigation and layout (AppLayout header/sidebar/mobile menu) to a more refined, calming, modern navigation experience inspired by the uploaded references (clean top bar, polished active states, softer surfaces, consistent iconography), without changing existing routes/pages or breaking responsiveness.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-revamp-tools-and-breathing-experiences-to-look-like-a-premium-meditation-app-using-a-tile-card-system-inspired-by-the-uploaded-references-large-tappable-tiles-soft-gradients-subtle-borders-clear-titles-descriptions-while-preserving-existing-functionality-and-navigation-to-enhancedbreathingpage",
+      "title": "Revamp Tools and Breathing experiences to look like a premium meditation app using a tile/card system inspired by the uploaded references (large tappable tiles, soft gradients, subtle borders, clear titles/descriptions), while preserving existing functionality and navigation to EnhancedBreathingPage.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-polish-the-dashboard-and-data-visual-sections-to-feel-like-a-modern-wellness-progress-experience-inspired-by-the-uploaded-progress-chart-reference-clean-chart-container-readable-axes-tooltip-calm-highlight-color-and-consistent-stat-cards",
+      "title": "Polish the Dashboard and data-visual sections to feel like a modern wellness/progress experience inspired by the uploaded progress/chart reference (clean chart container, readable axes/tooltip, calm highlight color, and consistent stat cards).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-and-apply-a-cohesive-set-of-meditation-grade-visual-assets-subtle-background-pattern-soft-gradient-hero-minimal-breathing-illustration-and-wire-them-into-the-redesigned-pages-as-static-frontend-assets",
+      "title": "Create and apply a cohesive set of meditation-grade visual assets (subtle background pattern + soft gradient hero + minimal breathing illustration) and wire them into the redesigned pages as static frontend assets.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-onboarding-verification-flow-to-match-the-soft-doctor-verification-blueprint-by-capturing-role-specific-verification-details-student-resident-consultant-tracks-and-storing-them-privately-per-user-while-continuing-to-enforce-mandatory-verification-before-any-in-app-access",
+      "title": "Update the onboarding/verification flow to match the \"soft doctor verification\" blueprint by capturing role-specific verification details (Student/Resident/Consultant tracks) and storing them privately per user, while continuing to enforce mandatory verification before any in-app access.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-refactor-the-backend-medical-verification-model-and-api-to-support-structured-role-based-verification-details-rather-than-overloading-a-single-string-field-e-g-college-id-and-update-the-frontend-react-query-verification-mutation-accordingly",
+      "title": "Refactor the backend medical verification model and API to support structured role-based verification details rather than overloading a single string field (e.g., \"college - id\"), and update the frontend React Query verification mutation accordingly.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-real-time-support-engine-entry-point-in-the-main-in-app-experience-by-adding-a-full-width-primary-action-what-s-happening-right-now-and-a-support-modules-screen-with-10-quick-access-modules-as-specified",
+      "title": "Implement the \"Real-time Support Engine\" entry point in the main in-app experience by adding a full-width primary action \"What’s happening right now?\" and a support modules screen with 10 quick-access modules as specified.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-support-module-playback-experience-for-each-of-the-10-modules-that-provides-a-60-180-second-local-audio-playback-b-a-simple-breathing-grounding-visual-and-c-a-clear-completion-exit-action-back-to-the-app",
+      "title": "Create a support module playback experience for each of the 10 modules that provides (a) 60–180 second local audio playback, (b) a simple breathing/grounding visual, and (c) a clear completion/exit action back to the app.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-evolve-the-vent-room-into-a-reactions-only-experience-no-comments-with-three-allowed-reactions-i-hear-you-strength-not-alone-and-add-backend-persistence-for-reactions",
+      "title": "Evolve the Vent Room into a reactions-only experience (no comments) with three allowed reactions (🤍 I hear you, 🤝 Strength, 🫂 Not alone), and add backend persistence for reactions.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-vent-room-safety-moderation-and-distress-detection-that-a-blocks-disallowed-content-submissions-and-b-prompts-a-crisis-resources-redirect-for-distressed-submissions-consistent-with-the-blueprint",
+      "title": "Add Vent Room safety moderation and distress detection that (a) blocks disallowed content submissions and (b) prompts a crisis-resources redirect for distressed submissions, consistent with the blueprint.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-guided-meditation-feature-entry-3-minute-reset-for-doctors-with-a-breathing-circle-animation-and-an-ambient-sound-selector-rain-wind-birds-ocean-instrumental-using-bundled-offline-static-audio-assets",
+      "title": "Add a Guided Meditation feature entry (\"3-Minute Reset for Doctors\") with a breathing circle animation and an ambient sound selector (rain, wind, birds, ocean, instrumental) using bundled offline static audio assets.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-enhanced-breathing-page-continues-to-load-background-audio-from-the-existing-static-path-assets-breathing-ambient-mp3-and-document-the-process-for-swapping-in-a-user-provided-file-without-code-changes",
+      "title": "Ensure the Enhanced Breathing page continues to load background audio from the existing static path \"/assets/breathing/ambient.mp3\" and document the process for swapping in a user-provided file without code changes.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restructure-the-primary-in-app-landing-experience-to-match-the-blueprint-s-vertical-card-order-guided-meditation-breathing-reset-vent-room-find-a-mentor-daily-check-in-ai-thought-support-without-breaking-existing-routes-pages",
+      "title": "Restructure the primary in-app landing experience to match the blueprint's vertical card order (Guided Meditation, Breathing Reset, Vent Room, Find a Mentor, Daily Check-In, AI Thought Support), without breaking existing routes/pages.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-android-packaging-build-setup-for-the-existing-react-web-app-so-a-tester-can-install-and-run-it-as-an-apk-on-android-devices",
+      "title": "Add an Android packaging/build setup for the existing React web app so a tester can install and run it as an APK on Android devices.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-build-documentation-for-generating-the-apk-locally-including-prerequisites-exact-commands-where-the-apk-output-is-located-and-common-troubleshooting-steps",
+      "title": "Add build documentation for generating the APK locally, including prerequisites, exact commands, where the APK output is located, and common troubleshooting steps.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-a-fresh-android-debug-apk-from-the-current-codebase-and-provide-a-direct-downloadable-link-to-that-apk-for-installation-on-android-devices",
+      "title": "Generate a fresh Android debug APK from the current codebase and provide a direct downloadable link to that APK for installation on Android devices.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-frontend-apk-download-query-hook-usegetandroidapk-in-frontend-src-hooks-usequeries-ts-to-stop-relying-on-catching-a-backend-trap-for-control-flow-and-instead-treat-a-successful-null-response-as-no-link-available",
+      "title": "Update the frontend APK download query hook (`useGetAndroidAPK` in `frontend/src/hooks/useQueries.ts`) to stop relying on catching a backend trap for control flow, and instead treat a successful `null` response as “no link available.”",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-frontend-can-retrieve-and-display-the-apk-download-link-even-when-the-user-is-not-logged-in-unauthenticated-guest-access-since-the-backend-getandroidapk-is-public",
+      "title": "Ensure the frontend can retrieve and display the APK download link even when the user is not logged in (unauthenticated/guest access), since the backend `getAndroidAPK()` is public.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-clearly-discoverable-apk-download-entry-point-on-the-pre-login-experience-login-page-that-surfaces-the-same-apk-download-link-or-no-link-available-instructions-as-the-settings-apk-card",
+      "title": "Add a clearly discoverable APK download entry point on the pre-login experience (Login page) that surfaces the same APK download link (or “no link available” instructions) as the Settings APK card.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-profile-setup-flow-so-that-after-the-user-enters-their-name-and-taps-continue-the-name-is-saved-to-the-backend-and-the-app-proceeds-past-the-name-step-i-e-the-profilesetupmodal-closes-because-the-caller-profile-query-returns-a-non-null-value",
+      "title": "Fix the Profile Setup flow so that after the user enters their name and taps “Continue”, the name is saved to the backend and the app proceeds past the name step (i.e., the ProfileSetupModal closes because the caller profile query returns a non-null value).",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-stubbed-react-query-implementations-for-fetching-and-saving-the-caller-user-profile-with-real-backend-calls-to-getcalleruserprofile-and-savecalleruserprofile-using-the-actor-from-useactor",
+      "title": "Replace the stubbed React Query implementations for fetching and saving the caller user profile with real backend calls to `getCallerUserProfile()` and `saveCallerUserProfile(...)`, using the actor from `useActor()`.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-align-frontend-profile-typing-and-mapping-with-the-backend-userprofile-shape-so-the-name-step-can-complete-without-runtime-type-mismatches-if-the-frontend-still-needs-additional-fields-e-g-role-verified-for-later-gating-ensure-the-name-step-uses-a-backend-compatible-payload-and-does-not-block-progression-past-name-entry",
+      "title": "Align frontend profile typing and mapping with the backend `UserProfile` shape so the name step can complete without runtime/type mismatches; if the frontend still needs additional fields (e.g., role/verified) for later gating, ensure the name-step uses a backend-compatible payload and does not block progression past name entry.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-guided-meditation-ambient-sound-selector-to-support-streaming-audio-from-full-internet-urls-in-addition-to-existing-bundled-local-assets-so-selecting-a-sound-plays-that-url-directly",
+      "title": "Update the Guided Meditation ambient sound selector to support streaming audio from full internet URLs (in addition to existing bundled local assets), so selecting a sound plays that URL directly.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-guided-meditation-audio-loading-logic-so-it-uses-the-selected-option-value-as-the-audio-source-directly-rather-than-assuming-a-local-asset-base-path-while-keeping-the-rest-of-the-guided-meditation-experience-unchanged-timer-breathing-visual-script-and-navigation",
+      "title": "Implement the Guided Meditation audio loading logic so it uses the selected option value as the audio source directly (rather than assuming a local asset base path), while keeping the rest of the Guided Meditation experience unchanged (timer, breathing visual, script, and navigation).",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Complete app-wide classy, minimalist, dark elegant UI/UX redesign (replace old floral/inconsistent styles across all screens/components)",
+      "reqIds": [],
+      "status": "in_progress"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Implement Export Data as PDF for personal records",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Implement daily self-care reminders with phone calendar integration",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add subscription monetization (₹199/mo with 1-month free trial) via Razorpay after business bank account setup (post-Free Beta)",
+      "reqIds": [],
+      "status": "blocked"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add/replace the meditation background audio file used by the Enhanced Breathing page at the existing static path \"/assets/breathing/ambient.mp3\" so that the guided breathing meditation plays the user-provided background audio during the session.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add anonymous login option (in addition to Google) while still enforcing mandatory medical verification before dashboard access",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Implement soft doctor verification with role-specific fields (students/residents/consultants) stored privately; no document upload; instant access; never publicly visible",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Build “Real-time Support Engine” with 10 quick-access modules (pre/post round, patient loss, medical error, etc.) each 60–180s audio + breathing/grounding UX",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Implement Vent Room as reactions-only (no comments), 500-char posts, plus moderation/distress detection (block self-harm instructions, patient data, hospital names, hate speech; redirect to crisis help)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Add anonymous Mentor system: matching by role/specialty/topic; text-only chat with no read receipts/typing indicators; 30-min sessions auto-close; crisis detection interrupts to helplines",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Implement paywall/premium gating with Google Play Billing (₹199/mo, 30-day free trial) triggered after day 5 or after vent/mentor attempts; breathing/crisis/basic check-in remain free",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Guided Meditation: add ambient sound selector (rain/wind/birds/ocean/instrumental) with offline playback + breathing circle animation; use finalized script + neutral calm voice",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Generate an Android APK build for testing/distribution",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Replace the trapping backend `getAndroidAPK()` implementation with a working query that returns an optional APK download URL as `?Text`, backed by stable/persistent storage in `backend/main.mo`.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add an admin-only backend method to set/clear the current Android debug APK download URL so the link can be updated without redeploying the frontend.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Persist the Android debug APK download URL across canister upgrades by storing it in stable state and adding an upgrade-safe migration path, so `getAndroidAPK()` returns the configured URL after redeployments/upgrades.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Allow meditation/breathing audio selector to stream audio files from internet URLs (not only bundled local assets) by using full URL option values and setting audio.src directly to the selected URL",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Healing Minds of Doctors BY THE PSYCH-ALCHEMIST",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

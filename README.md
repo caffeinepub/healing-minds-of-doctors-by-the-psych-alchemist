@@ -1,2 +1,3 @@
-# healing-minds-of-doctors-by-the-psych-alchemist
-Exported from Caffeine project: Healing Minds of Doctors BY THE PSYCH-ALCHEMIST
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

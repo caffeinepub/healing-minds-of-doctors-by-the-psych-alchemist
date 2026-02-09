@@ -1,0 +1,44 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Guided Meditation: support streaming ambient audio URLs",
+  "requirements": [
+    {
+      "id": "REQ-41",
+      "summary": "Allow Guided Meditation ambient sound options to include and play full internet (https://) audio URLs while preserving existing local assets.",
+      "acceptanceCriteria": [
+        "In Guided Meditation, ambient sound options can include full https:// URLs and are played successfully when selected.",
+        "Existing local ambient sound options (e.g., /assets/guided-meditation/*.mp3) continue to work without changes.",
+        "If a selected remote audio URL fails to load or play, the page shows a clear English error message and does not crash or get stuck in a playing state."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/content/guidedMeditation.ts",
+          "operation": "modify",
+          "description": "Extend the ambientSounds list to include at least one option whose path is a full https:// URL, while keeping existing local /assets/guided-meditation/*.mp3 entries unchanged."
+        },
+        {
+          "path": "frontend/src/pages/GuidedMeditationPage.tsx",
+          "operation": "modify",
+          "description": "Update the ambient sound selector and audio initialization to accept sound values that may be full https:// URLs (not just local asset paths), and ensure audio load/play failures show a clear English error message, set playback state back to not playing, and avoid UI lockups."
+        }
+      ]
+    },
+    {
+      "id": "REQ-42",
+      "summary": "Use the selected ambient sound option value directly as the audio source and ensure switching sources while playing works without affecting the rest of the Guided Meditation experience.",
+      "acceptanceCriteria": [
+        "Changing the selected ambient sound while audio is playing switches playback to the newly selected source (local or remote) without requiring a page refresh.",
+        "Starting/pausing/resetting the session continues to work as before and correctly controls the audio element.",
+        "No changes are made to the Enhanced Breathing page background audio behavior (it must still load from \"/assets/breathing/ambient.mp3\")."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/GuidedMeditationPage.tsx",
+          "operation": "modify",
+          "description": "Refactor Guided Meditation audio logic so the Select uses the sound's path (local or remote) as its value, and the audio element uses that selected value as its source directly; ensure changing selection during playback swaps sources cleanly (pause previous, set new source, load, and resume if playing), while keeping timer/breathing visual/script/navigation unchanged."
+        }
+      ]
+    }
+  ]
+}

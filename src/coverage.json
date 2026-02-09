@@ -1,0 +1,51 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-09T18:08:42.855Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 2,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-41",
+        "summary": "Update the Guided Meditation ambient sound selector to support streaming audio from full internet URLs (in addition to existing bundled local assets), so selecting a sound plays that URL directly.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/content/guidedMeditation.ts",
+          "frontend/src/pages/GuidedMeditationPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/content/guidedMeditation.ts",
+          "frontend/src/pages/GuidedMeditationPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-42",
+        "summary": "Implement the Guided Meditation audio loading logic so it uses the selected option value as the audio source directly (rather than assuming a local asset base path), while keeping the rest of the Guided Meditation experience unchanged (timer, breathing visual, script, and navigation).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/GuidedMeditationPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/GuidedMeditationPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/content/guidedMeditation.ts",
+    "frontend/src/pages/GuidedMeditationPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Trust system certificates and user-added certificates -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+    
+    <!-- Allow connections to Internet Computer network -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">ic0.app</domain>
+        <domain includeSubdomains="true">icp0.io</domain>
+        <domain includeSubdomains="true">raw.ic0.app</domain>
+        <domain includeSubdomains="true">identity.ic0.app</domain>
+    </domain-config>
+</network-security-config>
